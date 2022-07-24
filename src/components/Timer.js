@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import {useRef, useState, useEffect} from "react";
 import Seatbooking from "./Seatbooking";
 
-function Timer({onClickResetBtn} ){
+function Timer(props ){
+const [count, setCount]= useState(0);
 const intervalRef= useRef(null);
 const [timer,setTimer] = useState("00:00");
 
@@ -22,7 +23,8 @@ return{
 
 function startTimer(deadline){
     let {total, day ,hour,minute, second}= getTimeremaining(deadline);
-    if (total>=0){
+    if (total>=0 ){
+        console.log(count,total);
         setTimer(
             // (hour >9 ? hour : '0' + hour)+ ':' +
           minute >9 ? minute : '0' + minute +':' +
@@ -36,7 +38,7 @@ function startTimer(deadline){
 
 }
 function clearTimer(endtime){
-    setTimer('00:60')
+    setTimer('00:20')
     if(intervalRef.current)  clearInterval(intervalRef.current);
     const id = setInterval(()=>{
     startTimer(endtime);
@@ -46,7 +48,7 @@ function clearTimer(endtime){
 
 function getDeadlineTime(){
     let dealine= new Date();
-    dealine.setSeconds(dealine.getSeconds()+60);
+    dealine.setSeconds(dealine.getSeconds()+20);
     return dealine
 
 }
@@ -56,18 +58,26 @@ function getDeadlineTime(){
 // },[]);
 
 function onClickResetBtn(){
-    if(intervalRef.current) clearInterval(intervalRef.current);
-    clearTimer(getDeadlineTime());
+    // setCount(prevState => {
+    //     console.log(prevState,"fromsetcount");
+    //     return prevState + 1;
+    // });
+    
+       if(props.seatCount<2){
+        
+        if(intervalRef.current) clearInterval(intervalRef.current);
+        props.clickevent();
+        clearTimer(getDeadlineTime());
+       
+       }  
 }
 
-var timeclick= 0
+
 return(
 <div className="timer"  >
-   {timer}
-    {/* {timeclick > 3 ?  null : timer } */}
-   
-     
-      <button onClick={onClickResetBtn}>Book Seat</button>
+    
+{timer}
+      <button onClick={ onClickResetBtn}> Book Seat</button>
 </div>
 
 

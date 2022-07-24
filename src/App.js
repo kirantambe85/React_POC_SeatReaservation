@@ -15,17 +15,23 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 
+
+
+
+
+
 window.date = new Date()
 
 class App extends Component {
 
   constructor(props) {
     super(props);
-    this.seatCount = 0
+    
     var count = 0;
     this.baseState = this.state
+    this.state = { seatCount: 0 }
     this.state = {
-
+     
       startDate: new Date()
 
     };
@@ -33,8 +39,10 @@ class App extends Component {
     this.handleChange = this.handleChange.bind(this);
     clearInterval(this.interval);
     this.state.seconds =0;
+    this.state = { seconds: 0 }
+    // this.seatCount=0
     this.state = {
-      
+      seatCount : 0,
       currentDate: null,
       seat: [
         'Desk-1', 'Desk-2', 'Desk-3',
@@ -105,51 +113,100 @@ class App extends Component {
   
   //   }
   // }
-  componentWillUnmount() {
+  // componentWillUnmount() {
 
-    this.onClickData(this.seat) ;
+  //   this.onClickData(this.seat) ;
 
-  }
+  // }
 
+  // onClickData(seat) {
+  //   this.setState(prevState => ({
+            
+  //     seatCount: prevState.seatCount + 1
+  
+    
+  // }));
+  //   //this.seatCount += 1
+  //   if(this.state.seatCount <3){
+  //     if (this.state.seatReserved.indexOf(seat) > -1) {
+
+  //       this.setState({
+  //         seatAvailable: this.state.seatAvailable.concat(seat),
+  //         seatReserved: this.state.seatReserved.filter(res => res != seat),
+  //     })
+  //   setTimeout(()=>{
+  
+  //     this.setState({
+  
+  //       seatAvailable: this.state.seatAvailable.concat(seat),
+  //       seatReserved: this.state.seatReserved.filter(res => res != seat),
+  //   })
+  //         //seatSelected: this.state.seatSelected.filter(res => res != seat)
+  //       },20000);
+  //     } else {
+  
+  
+  //         this.setState({ 
+  //           seatReserved: this.state.seatReserved.concat(seat),
+  
+  //           //seatSelected: this.state.seatSelected.concat(seat),
+  //           seatAvailable: this.state.seatAvailable.filter(res => res != seat)
+  //         });
+  //         setTimeout(()=>{
+            
+  //           this.setState({
+  //             seatAvailable: this.state.seatAvailable.concat(seat),
+  //             seatReserved: this.state.seatReserved.filter(res => res != seat),
+  //         })
+  //         },20000)
+  
+  //     }
+  //   }
+  //   else{
+  //     alert("All seat book");
+  //   }
+
+   
+  // }
   onClickData(seat) {
+    
+      if (this.state.seatReserved.indexOf(seat) > -1) {
 
-    if (this.state.seatReserved.indexOf(seat) > -1) {
-
+        this.setState({
+          seatAvailable: this.state.seatAvailable.concat(seat),
+          seatReserved: this.state.seatReserved.filter(res => res != seat),
+      })
+    setTimeout(()=>{
+  
       this.setState({
+  
         seatAvailable: this.state.seatAvailable.concat(seat),
         seatReserved: this.state.seatReserved.filter(res => res != seat),
     })
-  setTimeout(()=>{
-
-    this.setState({
-
-      seatAvailable: this.state.seatAvailable.concat(seat),
-      seatReserved: this.state.seatReserved.filter(res => res != seat),
-  })
-        //seatSelected: this.state.seatSelected.filter(res => res != seat)
-      },20000);
-    } else {
-
-
-        this.setState({ 
-          seatReserved: this.state.seatReserved.concat(seat),
-
-          //seatSelected: this.state.seatSelected.concat(seat),
-          seatAvailable: this.state.seatAvailable.filter(res => res != seat)
-        });
-        setTimeout(()=>{
-          
-          this.setState({
-            seatAvailable: this.state.seatAvailable.concat(seat),
-            seatReserved: this.state.seatReserved.filter(res => res != seat),
-        })
-        },20000)
-
-    }
-  }
+          //seatSelected: this.state.seatSelected.filter(res => res != seat)
+        },20000);
+      } else {
   
   
+          this.setState({ 
+            seatReserved: this.state.seatReserved.concat(seat),
+  
+            //seatSelected: this.state.seatSelected.concat(seat),
+            seatAvailable: this.state.seatAvailable.filter(res => res != seat)
+          });
+          setTimeout(()=>{
+            
+            this.setState({
+              seatAvailable: this.state.seatAvailable.concat(seat),
+              seatReserved: this.state.seatReserved.filter(res => res != seat),
+          })
+          },20000)
+  
+      }
+    
+
    
+  }
   
   
   resetForm = () => {this.setState(clearInterval(this.interval))
@@ -161,9 +218,10 @@ class App extends Component {
     window.date = date;
     this.resetForm();
     
-    clearInterval(this.interval);
-    this.state = { seconds: 0 };
-    this.state.seconds=0;
+    // clearInterval(this.interval);
+    // this.state = { seconds: 0 };
+    // this.state.seconds=0;
+<Timer/>
     this.setState({
     //  state:{seconds: 0},
     
@@ -183,7 +241,7 @@ class App extends Component {
         
       ],
       seatReserved: [],
-      seatSelected: post
+      // seatSelected: post
 
     })
 
@@ -295,16 +353,21 @@ class DrawGrid extends React.Component {
 
     if (this.seatCount < 3) {
 
-      this.props.onClickData(seat);
-      this.interval = setInterval(() => {
-        this.setState(prevState => ({
+       this.props.onClickData(seat);
+      
+        // this.interval = setInterval(() => {
+        //   this.setState(prevState => ({
+            
+        //       seconds: prevState.seconds + 1
           
-            seconds: prevState.seconds + 1
+            
+        //   }));
+        // }, 1000);
+      
+     
         
-          
-        }));
 
-      }, 1000);
+   
       if (this.seatCount ) {
 
         let list = document.querySelectorAll(".reserve");
@@ -321,6 +384,9 @@ class DrawGrid extends React.Component {
 
       }
 
+    }
+    else{
+      alert("All seat booked");
     }
 
   }
@@ -341,11 +407,13 @@ class DrawGrid extends React.Component {
             
               {this.props.seat.map(row =>
                 <td className={this.props.reserved.indexOf(row) > -1 ? 'reserved' : 'available'}
-                  key={row} onClick={e => this.onClickSeat(row)}>
+                  key={row} >
                   {row} 
-                  <div ><Timer/></div>
+                  <div ><Timer clickevent={() =>{this.onClickSeat(row)}} seatCount={this.seatCount}/> </div>
                 </td>
               )}
+              {/* {this.props.onClickSeat(row)}} */}
+              {/* onClick={e => this.onClickSeat(row)} */}
               {/* {this.props.reserved.indexOf(row) > -1 ? this.state.seconds <= 60  ? this.state.seconds:'' : 'available'? "": null} */}
               {/* {this.props.reserved.indexOf(row) > -1 ? this.state.seconds : 'available'? "-": null} */}
               {/* {this.seatCount < 3 ? <Timer  /> : null} */}
@@ -356,11 +424,7 @@ class DrawGrid extends React.Component {
 
         <AvailableList available={this.props.available} />
         <ReservedList reserved={this.props.reserved} />
-      </div>
-
-
-
-      
+      </div>  
     )
   }
 
@@ -395,6 +459,14 @@ class ReservedList extends React.Component {
     )
   }
 }
+
+
+
+
+
+
+
+
 
 
 
